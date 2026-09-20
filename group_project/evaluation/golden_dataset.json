@@ -1,0 +1,82 @@
+[
+  {
+    "question": "Mức thu học phí đối với nhóm ngành Kỹ thuật và Công nghệ thông tin là bao nhiêu tiền một tín chỉ?",
+    "expected_answer": "Mức thu học phí đối với nhóm ngành Kỹ thuật, Công nghệ thông tin là 540.000 VNĐ / tín chỉ học phí.",
+    "expected_context": "Nhóm ngành Kỹ thuật, Công nghệ thông tin: 540.000 VNĐ / tín chỉ học phí."
+  },
+  {
+    "question": "Thời hạn nộp học phí học kỳ 1 năm học 2024-2025 là khi nào?",
+    "expected_answer": "Thời hạn nộp học phí học kỳ 1 là từ ngày 15/09 đến hết ngày 15/10/2024.",
+    "expected_context": "Học kỳ 1: Sinh viên hoàn thành nộp học phí từ ngày 15/09 đến hết ngày 15/10/2024."
+  },
+  {
+    "question": "Những đối tượng sinh viên nào được miễn 100% học phí?",
+    "expected_answer": "Sinh viên là con liệt sĩ, con thương binh nặng mất sức lao động trên 81%, sinh viên tàn tật khuyết tật nặng và sinh viên mồ côi cả cha lẫn mẹ thuộc hộ nghèo.",
+    "expected_context": "Miễn 100% học phí: Sinh viên là con liệt sĩ, con thương binh nặng mất sức lao động trên 81%, sinh viên tàn tật khuyết tật nặng và sinh viên mồ côi cả cha lẫn mẹ thuộc hộ nghèo."
+  },
+  {
+    "question": "Điều kiện về điểm GPA và điểm rèn luyện để đạt học bổng khuyến khích học tập loại Xuất sắc là gì?",
+    "expected_answer": "Sinh viên cần đạt điểm GPA từ 3.60 đến 4.00 và điểm rèn luyện từ 90 điểm trở lên.",
+    "expected_context": "Mức Xuất sắc: Điểm GPA đạt từ 3.60 đến 4.00 và ĐRL đạt từ 90 điểm trở lên. Mức học bổng bằng 120% mức trần học phí của ngành học."
+  },
+  {
+    "question": "Sinh viên đạt học bổng loại Giỏi được hưởng mức học bổng bằng bao nhiêu phần trăm mức trần học phí?",
+    "expected_answer": "Mức học bổng loại Giỏi bằng 110% mức trần học phí của ngành học.",
+    "expected_context": "Mức Giỏi: Điểm GPA đạt từ 3.20 đến 3.59 và ĐRL đạt từ 80 điểm trở lên. Mức học bổng bằng 110% mức trần học phí của ngành học."
+  },
+  {
+    "question": "Sinh viên cần đăng ký tối thiểu bao nhiêu tín chỉ trong học kỳ để đủ điều kiện xét học bổng khuyến khích học tập?",
+    "expected_answer": "Sinh viên phải đăng ký tối thiểu 15 tín chỉ trong học kỳ xét học bổng và không có học phần nào bị điểm F.",
+    "expected_context": "Đối tượng được xét là sinh viên đại học chính quy trong thời gian đào tạo theo kế hoạch chuẩn, đăng ký tối thiểu 15 tín chỉ trong học kỳ xét học bổng và không có học phần nào bị điểm F."
+  },
+  {
+    "question": "Mức phí nội trú ký túc xá cho phòng tiêu chuẩn 4 người là bao nhiêu một tháng?",
+    "expected_answer": "Phí nội trú phòng tiêu chuẩn 4 người là 450.000 VNĐ / sinh viên / tháng.",
+    "expected_context": "Phí nội trú ký túc xá quy định đối với phòng tiêu chuẩn 4 người là 450.000 VNĐ/sinh viên/tháng."
+  },
+  {
+    "question": "Giờ giới nghiêm đóng cửa ký túc xá hàng ngày là mấy giờ?",
+    "expected_answer": "Ký túc xá mở cửa lúc 05h30 sáng và đóng cửa lúc 23h00 đêm hàng ngày.",
+    "expected_context": "Sinh viên nội trú phải nghiêm chỉnh chấp hành giờ giới nghiêm: mở cửa 05h30 sáng và đóng cửa lúc 23h00 đêm hàng ngày."
+  },
+  {
+    "question": "Sinh viên bị cảnh báo học vụ mức 1 khi nào?",
+    "expected_answer": "Sinh viên bị cảnh báo học vụ mức 1 nếu điểm trung bình học kỳ dưới 1.00 ở học kỳ đầu hoặc dưới 1.20 ở các học kỳ tiếp theo.",
+    "expected_context": "Sinh viên bị cảnh báo học vụ mức 1 nếu điểm trung bình học kỳ dưới 1.00 đối với học kỳ đầu, hoặc dưới 1.20 đối với các học kỳ tiếp theo."
+  },
+  {
+    "question": "Sinh viên bị cảnh báo học vụ bao nhiêu lần liên tiếp thì bị buộc thôi học?",
+    "expected_answer": "Sinh viên bị cảnh báo học vụ 3 lần liên tiếp sẽ bị buộc thôi học theo quy định của Hiệu trưởng.",
+    "expected_context": "Sinh viên bị cảnh báo học vụ 3 lần liên tiếp sẽ bị buộc thôi học theo quy định của Hiệu trưởng."
+  },
+  {
+    "question": "Khối lượng học tập tối thiểu sinh viên phải đăng ký trong mỗi học kỳ chính là bao nhiêu tín chỉ?",
+    "expected_answer": "Khối lượng học tập tối thiểu sinh viên phải đăng ký trong mỗi học kỳ chính là 14 tín chỉ (trừ học kỳ cuối khóa).",
+    "expected_context": "Khối lượng học tập tối thiểu sinh viên phải đăng ký trong mỗi học kỳ chính là 14 tín chỉ (trừ học kỳ cuối khóa)."
+  },
+  {
+    "question": "Chuẩn đầu ra tiếng Anh đối với khối ngành Kỹ thuật và Công nghệ yêu cầu chứng chỉ gì và bao nhiêu điểm?",
+    "expected_answer": "Yêu cầu chứng chỉ TOEIC quốc tế tối thiểu 500 điểm, hoặc TOEFL iBT tối thiểu 55 điểm, hoặc IELTS học thuật tối thiểu 5.0.",
+    "expected_context": "Đối với khối ngành Kỹ thuật và Công nghệ: Yêu cầu chứng chỉ TOEIC quốc tế tối thiểu 500 điểm, hoặc TOEFL iBT tối thiểu 55 điểm, hoặc IELTS học thuật tối thiểu 5.0."
+  },
+  {
+    "question": "Điểm trung bình tích lũy (GPA) tối thiểu để sinh viên được xét công nhận tốt nghiệp là bao nhiêu?",
+    "expected_answer": "Điểm trung bình tích lũy toàn khóa tối thiểu phải đạt từ 2.00 trở lên.",
+    "expected_context": "Điểm trung bình chung tích lũy (GPA) tối thiểu để tốt nghiệp phải đạt từ 2.0 trở lên."
+  },
+  {
+    "question": "Đối tượng ưu tiên số 1 khi xét tiếp nhận sinh viên nội trú ký túc xá là ai?",
+    "expected_answer": "Ưu tiên 1 là sinh viên là con liệt sĩ, con thương binh, bệnh binh.",
+    "expected_context": "Ưu tiên 1: Sinh viên là con liệt sĩ, con thương binh, bệnh binh;"
+  },
+  {
+    "question": "Sinh viên thuộc diện cảnh báo học vụ chỉ được đăng ký tối đa bao nhiêu tín chỉ trong học kỳ kế tiếp?",
+    "expected_answer": "Sinh viên thuộc diện cảnh báo học vụ mức 1 và mức 2 chỉ được đăng ký tối đa 14 tín chỉ trong học kỳ kế tiếp.",
+    "expected_context": "Sinh viên thuộc diện cảnh báo mức 1 và mức 2 chỉ được đăng ký tối đa 14 tín chỉ trong học kỳ kế tiếp."
+  },
+  {
+    "question": "Mức thu học phí đối với nhóm ngành Kinh tế, Quản lý là bao nhiêu tiền một tín chỉ?",
+    "expected_answer": "Nhóm ngành Kinh tế, Quản lý, Khoa học Xã hội là 420.000 VNĐ / tín chỉ học phí.",
+    "expected_context": "Nhóm ngành Kinh tế, Quản lý, Khoa học Xã hội: 420.000 VNĐ / tín chỉ học phí."
+  }
+]
