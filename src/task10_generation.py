@@ -147,7 +147,7 @@ def call_llm(system_prompt: str, user_message: str, context_only: str = "", quer
         try:
             from google import genai
             client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-            model = LLM_MODEL or "gemini-2.0-flash"
+            model = LLM_MODEL or "gemini-3.5-flash-lite"
             prompt = f"{system_prompt}\n\n{user_message}"
             response = client.models.generate_content(model=model, contents=prompt)
             return response.text or ""
