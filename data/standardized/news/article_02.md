@@ -1,28 +1,17 @@
-# Hướng dẫn quy trình đăng ký xét cấp học bổng khuyến khích học tập học kỳ 1 năm học 2024-2025
+# Thông báo về điều kiện dự thi HK 3 (kỳ hè) năm học 2025-2026 đối với sinh viên chưa hoàn thành nghĩa vụ học phí
 
-**Source:** https://daihoc.edu.vn/hoc-bong/huong-dan-quy-trinh-xet-cap-hoc-bong-khuyen-khich-hoc-tap-ky-1
+**Source:** https://ptit.edu.vn/thong-bao-ve-dieu-kien-du-thi-hk-3-ky-he-nam-hoc-2025-2026-doi-voi-sinh-vien-chua-hoan-thanh-nghia-vu-hoc-phi/
 
-**Crawled:** 2026-09-20T12:02:31.052445
+**Crawled:** 2026-09-20T14:35:48.426528
 
 **Doc Type:** news
 
 ---
 
-# Hướng dẫn quy trình đăng ký xét cấp học bổng khuyến khích học tập học kỳ 1 năm học 2024-2025
+# Thông báo về điều kiện dự thi HK 3 (kỳ hè) năm học 2025-2026 đối với sinh viên chưa hoàn thành nghĩa vụ học phí
 
-Phòng Công tác Sinh viên hướng dẫn quy trình và thủ tục xét cấp học bổng khuyến khích học tập (HBKKHT) học kỳ 1 năm học 2024-2025:
+Căn cứ vào Quyết định số 2572/QĐ-HV ngày 31/10/2025 của Giám đốc học viện về việc ban hành Quy định tổ chức thi, kiểm tra và đánh giá các học phần của Học viện Công nghệ Bưu chính Viễn thông. 
 
-## 1. Đối tượng và điều kiện tiên quyết
-- Sinh viên hệ đại học chính quy đăng ký và học tối thiểu 15 tín chỉ trong học kỳ xét học bổng.
-- Không vi phạm kỷ luật từ mức khiển trách trở lên trong học kỳ xét.
-- Không có bất kỳ học phần nào nhận điểm F (điểm học phần dưới 4.0 thang điểm 10).
-- Điểm rèn luyện học kỳ đạt từ 70 điểm (loại Khá) trở lên.
+Trung tâm Khảo thí & Đảm bảo chất lượng giáo dục thông báo: Những sinh viên đăng ký học kỳ III (kỳ hè) năm học 2025 – 2026 chưa hoàn thành nghĩa vụ học phí theo quy định của Học viện trước ngày 31/7/2026, sẽ không đủ điều kiện dự thi toàn bộ các học phần đăng ký học trong học kỳ III (kỳ hè) năm học 2025 – 2026.
 
-## 2. Tiêu chuẩn và phân loại học bổng
-- **Học bổng Xuất sắc**: Điểm GPA từ 3.60 trở lên và Điểm rèn luyện từ 90 điểm trở lên. Mức hưởng: 120% định mức học phí.
-- **Học bổng Giỏi**: Điểm GPA từ 3.20 đến 3.59 và Điểm rèn luyện từ 80 điểm trở lên. Mức hưởng: 110% định mức học phí.
-- **Học bổng Khá**: Điểm GPA từ 2.50 đến 3.19 và Điểm rèn luyện từ 70 điểm trở lên. Mức hưởng: 100% định mức học phí.
-
-## 3. Thủ tục nhận tiền học bổng
-- Sinh viên có tên trong danh sách xét duyệt phải hoàn thiện cập nhật số tài khoản ngân hàng chính chủ trên cổng thông tin sinh viên trước ngày 30/11/2024.
-- Nhà trường sẽ chuyển khoản học bổng trực tiếp qua tài khoản ngân hàng trong vòng 15 ngày làm việc kể từ ngày ban hành quyết định chính thức.
+Trân trọng./.

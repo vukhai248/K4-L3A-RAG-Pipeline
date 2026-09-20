@@ -6,12 +6,12 @@
 
 ---
 
-QUY CHẾ QUẢN LÝ VÀ NỘI QUY KÝ TÚC XÁ SINH VIÊN
+QUY CHẾ QUẢN LÝ VÀ NỘI QUY KÝ TÚC XÁ - HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG
 Điều 1: Nguyên tắc tiếp nhận sinh viên nội trú
-Ký túc xá ưu tiên bố trí chỗ ở cho sinh viên theo thứ tự ưu tiên quy định của Nhà nước: Ưu tiên 1: Sinh viên là con liệt
-sĩ, con thương binh, bệnh binh; Ưu tiên 2: Sinh viên mồ côi cả cha lẫn mẹ hoặc thuộc hộ nghèo, cận nghèo theo chuẩn
-quốc gia; Ưu tiên 3: Sinh viên vùng sâu, vùng xa, hải đảo; Ưu tiên 4: Tân sinh viên năm thứ nhất trúng tuyển theo diện
-tuyển thẳng.
+Ký túc xá Học viện Công nghệ Bưu chính Viễn thông ưu tiên bố trí chỗ ở cho sinh viên theo thứ tự ưu tiên quy định của
+Nhà nước: Ưu tiên 1: Sinh viên là con liệt sĩ, con thương binh, bệnh binh; Ưu tiên 2: Sinh viên mồ côi cả cha lẫn mẹ
+hoặc thuộc hộ nghèo, cận nghèo theo chuẩn quốc gia; Ưu tiên 3: Sinh viên vùng sâu, vùng xa, hải đảo; Ưu tiên 4: Tân
+sinh viên năm thứ nhất trúng tuyển theo diện tuyển thẳng.
 Điều 2: Mức thu phí nội trú và dịch vụ
 Phí nội trú ký túc xá quy định đối với phòng tiêu chuẩn 4 người là 450.000 VNĐ/sinh viên/tháng. Phòng dịch vụ chất
 lượng cao 2 người là 900.000 VNĐ/sinh viên/tháng (đã bao gồm điều hòa, bình nóng lạnh). Tiền điện và nước sinh hoạt

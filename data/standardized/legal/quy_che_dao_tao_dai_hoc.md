@@ -6,7 +6,7 @@
 
 ---
 
-QUY CHẾ ĐÀO TẠO TRÌNH ĐỘ ĐẠI HỌC
+QUY CHẾ ĐÀO TẠO ĐẠI HỌC THEO HỆ THỐNG TÍN CHỈ - HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG
 Chương I: Quy định chung về đào tạo tín chỉ
 Quy chế này áp dụng cho sinh viên hệ chính quy đào tạo theo hệ thống tín chỉ. Năm học bao gồm 2 học kỳ chính (học
 kỳ 1, học kỳ 2) và 1 học kỳ phụ (học kỳ hè). Mỗi tín chỉ tương đương 15 tiết lý thuyết, hoặc 30-45 tiết thực hành, thí

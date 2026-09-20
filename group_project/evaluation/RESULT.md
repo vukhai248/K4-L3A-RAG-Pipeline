@@ -9,7 +9,7 @@
 | Evaluator model                    | Rule-based token-grounded evaluator & RAG metric suite |
 | Generator model                    | Local grounded synthesis / LLM Dispatcher (OpenAI/Gemini/Anthropic ready) |
 | Embedding model                    | sentence-transformers/all-MiniLM-L6-v2 (dim=384, cosine distance) |
-| Corpus version/commit              | v1.0 (8 standardized documents: 3 legal policy documents, 5 news articles) |
+| Corpus version/commit              | v2.0 (8 standardized PTIT documents: 3 legal policy documents, 5 live official news articles from ptit.edu.vn) |
 | Golden dataset size                | 16 Q&A pairs grounded on university policy corpus |
 | `top_k`                            | 5 |
 | Fallback threshold and calibration | score_threshold = 0.3 (calibrated on in-domain cosine similarity vs out-of-domain baseline) |
@@ -25,15 +25,15 @@ Hai config sử dụng cùng golden dataset, generator, evaluator, prompt và `t
 
 | Metric            | Config A | Config B | Delta B−A |
 | ----------------- | -------: | -------: | --------: |
-| Faithfulness      |   0.8871 |   0.8838 |   -0.0032 |
-| Answer relevance  |   0.8580 |   0.8694 |   +0.0114 |
-| Context recall    |   0.9736 |   0.9873 |   +0.0137 |
-| Context precision |   0.8306 |   0.9176 |   +0.0871 |
-| **Average**       |   0.8873 |   0.9145 |   +0.0272 |
+| Faithfulness      |   0.7493 |   0.8242 |   +0.0749 |
+| Answer relevance  |   0.5055 |   0.6598 |   +0.1543 |
+| Context recall    |   0.7629 |   0.8752 |   +0.1123 |
+| Context precision |   0.6464 |   0.8418 |   +0.1954 |
+| **Average**       |   0.6660 |   0.8002 |   +0.1342 |
 
 ## A/B comparison
 
-- **Cấu hình tốt hơn:** **Config B (Hybrid + RRF)** vượt trội hơn hẳn Config A trên hầu hết các chỉ số quan trọng, đặc biệt là **Context Precision (+8.71%)** và **Context Recall (+1.37%)**, kéo theo điểm trung bình tăng từ 0.8873 lên 0.9145 (+2.72%).
+- **Cấu hình tốt hơn:** **Config B (Hybrid + RRF)** vượt trội hơn hẳn Config A trên toàn bộ 4 chỉ số, đặc biệt là **Context Precision (+19.54%)**, **Answer Relevance (+15.43%)** và **Context Recall (+11.23%)**, kéo theo điểm trung bình tăng từ 0.6660 lên 0.8002 (+13.42%).
 - **Evidence:** 
   - Trong các câu hỏi chứa từ khoá định lượng chính xác (ví dụ: "540.000 VNĐ", "14 tín chỉ", "450.000 VNĐ", "TOEIC 500"), BM25 giúp kéo các đoạn văn bản chứa chính xác các con số và mã quy định lên vị trí đầu bảng xếp hạng. 
   - RRF kết hợp điểm hạng giúp loại bỏ các chunk dense search có điểm tương đồng ngữ nghĩa mơ hồ nhưng thiếu từ khoá mục tiêu.

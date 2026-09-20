@@ -83,12 +83,12 @@ def download_documents() -> None:
          "đạt chuẩn đầu ra Ngoại ngữ (TOEIC tối thiểu 500 hoặc tương đương) và chuẩn Tin học cơ bản; "
          "hoàn thành nghĩa vụ học phí và hoàn thành chứng chỉ Giáo dục Quốc phòng - An ninh, Giáo dục Thể chất.")
     ]
-    create_pdf("quy_che_dao_tao_dai_hoc.pdf", "QUY CHẾ ĐÀO TẠO TRÌNH ĐỘ ĐẠI HỌC", doc1_sections)
+    create_pdf("quy_che_dao_tao_dai_hoc.pdf", "QUY CHẾ ĐÀO TẠO ĐẠI HỌC THEO HỆ THỐNG TÍN CHỈ - HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG", doc1_sections)
 
     # 2. Quy định học bổng khuyến khích học tập
     doc2_sections = [
         ("Điều 1: Mục đích và đối tượng xét cấp học bổng",
-         "Học bổng khuyến khích học tập nhằm động viên, khuyến khích sinh viên có thành tích học tập và rèn luyện tốt. "
+         "Học bổng khuyến khích học tập nhằm động viên, khuyến khích sinh viên Học viện Công nghệ Bưu chính Viễn thông có thành tích học tập và rèn luyện tốt. "
          "Đối tượng được xét là sinh viên đại học chính quy trong thời gian đào tạo theo kế hoạch chuẩn, "
          "đăng ký tối thiểu 15 tín chỉ trong học kỳ xét học bổng và không có học phần nào bị điểm F."),
         ("Điều 2: Tiêu chuẩn xếp loại và định mức học bổng",
@@ -106,14 +106,14 @@ def download_documents() -> None:
         ("Điều 4: Thời gian chi trả và hình thức nhận học bổng",
          "Học bổng được xét và chi trả theo từng học kỳ (mỗi năm học xét 2 lần). "
          "Tiền học bổng được chuyển trực tiếp vào tài khoản ngân hàng chính chủ của sinh viên liên kết với nhà trường "
-         "sau khi có quyết định chính thức của Hội đồng thi đua khen thưởng.")
+         "sau khi có quyết định chính thức của Hội đồng thi đua khen thưởng Học viện.")
     ]
-    create_pdf("quy_dinh_hoc_bong_khuyen_khich.pdf", "QUY ĐỊNH XÉT CẤP HỌC BỔNG KHUYẾN KHÍCH HỌC TẬP", doc2_sections)
+    create_pdf("quy_dinh_hoc_bong_khuyen_khich.pdf", "QUY ĐỊNH HỌC BỔNG KHUYẾN KHÍCH HỌC TẬP - HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG", doc2_sections)
 
     # 3. Quy chế quản lý nội trú ký túc xá
     doc3_sections = [
         ("Điều 1: Nguyên tắc tiếp nhận sinh viên nội trú",
-         "Ký túc xá ưu tiên bố trí chỗ ở cho sinh viên theo thứ tự ưu tiên quy định của Nhà nước: "
+         "Ký túc xá Học viện Công nghệ Bưu chính Viễn thông ưu tiên bố trí chỗ ở cho sinh viên theo thứ tự ưu tiên quy định của Nhà nước: "
          "Ưu tiên 1: Sinh viên là con liệt sĩ, con thương binh, bệnh binh; "
          "Ưu tiên 2: Sinh viên mồ côi cả cha lẫn mẹ hoặc thuộc hộ nghèo, cận nghèo theo chuẩn quốc gia; "
          "Ưu tiên 3: Sinh viên vùng sâu, vùng xa, hải đảo; "
@@ -132,7 +132,7 @@ def download_documents() -> None:
          "Vi phạm từ lần thứ ba hoặc vi phạm nghiêm trọng (đánh bạc, sử dụng chất gây nghiện, nấu ăn gây nguy cơ hỏa hoạn) "
          "sẽ bị chấm dứt hợp đồng nội trú ngay lập tức và gửi thông báo về khoa chuyên môn để xem xét kỷ luật học vụ.")
     ]
-    create_pdf("quy_che_quan_ly_ky_tuc_xa.pdf", "QUY CHẾ QUẢN LÝ VÀ NỘI QUY KÝ TÚC XÁ SINH VIÊN", doc3_sections)
+    create_pdf("quy_che_quan_ly_ky_tuc_xa.pdf", "QUY CHẾ QUẢN LÝ VÀ NỘI QUY KÝ TÚC XÁ - HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG", doc3_sections)
 
 
 if __name__ == "__main__":

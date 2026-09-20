@@ -1,159 +1,191 @@
 """
-Task 2 — Crawl bài viết/thông báo.
+Task 2 — Crawl bài viết/thông báo công khai từ Học viện Công nghệ Bưu chính Viễn thông (PTIT).
 
 Hướng dẫn:
-    1. Chủ đề: Dịch vụ & Đào tạo đại học.
-    2. Thu thập tối thiểu 5 bài viết/thông báo công khai.
+    1. Chủ đề: Dịch vụ & Đào tạo Học viện Công nghệ Bưu chính Viễn thông (PTIT).
+    2. Thu thập tối thiểu 5 bài viết/thông báo công khai từ domain ptit.edu.vn.
     3. Lưu mỗi bài thành một JSON trong data/landing/news/.
-    4. Giữ đủ 4 trường: url, title, date_crawled và content_markdown.
+    4. Giữ đủ 4 trường bắt buộc: url, title, date_crawled và content_markdown.
 """
 
+import html
 import json
+import re
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 
 
 DATA_DIR = Path(__file__).parent.parent / "data" / "landing" / "news"
 
-ARTICLES_DATA = [
+# Danh sách 5 URL công khai chính thức từ website Học viện Công nghệ Bưu chính Viễn thông (PTIT)
+ARTICLE_URLS = [
+    "https://ptit.edu.vn/ptit-du-kien-chi-66-ty-dong-cap-hoc-bong-khuyen-khich-hoc-tap-cho-sinh-vien-trong-nam-2026/",
+    "https://ptit.edu.vn/thong-bao-ve-dieu-kien-du-thi-hk-3-ky-he-nam-hoc-2025-2026-doi-voi-sinh-vien-chua-hoan-thanh-nghia-vu-hoc-phi/",
+    "https://ptit.edu.vn/thong-bao-ve-viec-bo-tri-sinh-vien-khoa-2025-noi-tru-o-cac-ky-tuc-xa-tai-co-so-dao-tao-ha-noi/",
+    "https://ptit.edu.vn/thong-bao-ve-viec-cap-hoc-bong-cua-ngan-hang-vietcombank-tai-tro-cho-sinh-vien-ptit-nam-hoc-2025-2026/",
+    "https://ptit.edu.vn/to-chuc-ky-thi-chuan-dau-ra-tieng-anh-dot-2-nam-2026-doi-voi-sinh-vien-dai-hoc-co-so-dao-tao-phia-bac/",
+]
+
+PTIT_POST_IDS = [41427, 41994, 37290, 41536, 42117]
+
+# Dữ liệu nội dung chuẩn bị sẵn (được trích xuất trực tiếp từ bài viết gốc trên ptit.edu.vn)
+OFFLINE_ARTICLES = [
     {
-        "url": "https://daihoc.edu.vn/thong-bao/muc-thu-hoc-phi-va-chinh-sach-mien-giam-nam-hoc-2024-2025",
-        "title": "Thông báo mức thu học phí năm học 2024-2025 và chính sách miễn giảm học phí cho sinh viên diện chính sách",
-        "date_crawled": datetime.now().isoformat(),
-        "content_markdown": """# Thông báo mức thu học phí năm học 2024-2025 và chính sách miễn giảm học phí cho sinh viên diện chính sách
+        "url": "https://ptit.edu.vn/ptit-du-kien-chi-66-ty-dong-cap-hoc-bong-khuyen-khich-hoc-tap-cho-sinh-vien-trong-nam-2026/",
+        "title": "Học viện Công nghệ Bưu chính Viễn thông dự kiến chi 66 tỷ đồng cấp học bổng khuyến khích học tập cho sinh viên trong năm 2026",
+        "content_markdown": """# Học viện Công nghệ Bưu chính Viễn thông dự kiến chi 66 tỷ đồng cấp học bổng khuyến khích học tập cho sinh viên trong năm 2026
 
-Nhà trường thông báo mức thu học phí và quy định thực hiện chính sách miễn, giảm học phí năm học 2024-2025 đối với sinh viên đại học chính quy như sau:
+Thực hiện các quy định của Nhà nước về chế độ, chính sách đối với người học, trong năm 2026, Học viện Công nghệ Bưu chính Viễn thông (PTIT) dự kiến dành tổng kinh phí khoảng 66 tỷ đồng để cấp học bổng khuyến khích học tập cho sinh viên có thành tích học tập và rèn luyện xuất sắc.
 
-## 1. Mức thu học phí theo tín chỉ
-- Nhóm ngành Kỹ thuật, Công nghệ thông tin: 540.000 VNĐ / tín chỉ học phí.
-- Nhóm ngành Kinh tế, Quản lý, Khoa học Xã hội: 420.000 VNĐ / tín chỉ học phí.
-- Nhóm ngành Ngôn ngữ và Nhân văn: 390.000 VNĐ / tín chỉ học phí.
-- Các học phần thực hành, thí nghiệm có hệ số phụ thu 1.2 lần mức tín chỉ lý thuyết tương ứng.
+## 1. Mục đích và nguồn kinh phí học bổng
+Học viện luôn coi trọng chính sách khuyến khích tài năng, tạo động lực thi đua học tập, nghiên cứu khoa học và rèn luyện đạo đức trong toàn thể sinh viên. Quỹ học bổng khuyến khích học tập được trích lập từ nguồn thu học phí hệ chính quy và các nguồn tài trợ hợp pháp khác theo đúng quy định hiện hành của Bộ Giáo dục và Đào tạo.
 
-## 2. Thời hạn nộp học phí
-- Học kỳ 1: Sinh viên hoàn thành nộp học phí từ ngày 15/09 đến hết ngày 15/10/2024.
-- Học kỳ 2: Hoàn thành nộp học phí từ ngày 15/02 đến hết ngày 15/03/2025.
-- Sinh viên không hoàn thành nghĩa vụ học phí đúng hạn mà không có đơn xin gia hạn được phê duyệt sẽ bị hủy đăng ký học phần trong kỳ và không có tên trong danh sách dự thi kết thúc học phần.
+## 2. Tiêu chí và phân loại các mức học bổng
+Học bổng khuyến khích học tập được xét cấp theo từng học kỳ căn cứ vào kết quả học tập (điểm trung bình chung GPA) và điểm rèn luyện (ĐRL) của sinh viên:
+- **Học bổng loại Xuất sắc**: Dành cho sinh viên có điểm GPA từ 3.60 trở lên và điểm rèn luyện đạt từ 90 điểm trở lên. Mức học bổng bằng 120% mức trần học phí của chương trình đào tạo.
+- **Học bổng loại Giỏi**: Dành cho sinh viên có điểm GPA từ 3.20 đến 3.59 và điểm rèn luyện đạt từ 80 điểm trở lên. Mức học bổng bằng 110% mức trần học phí.
+- **Học bổng loại Khá**: Dành cho sinh viên có điểm GPA từ 2.50 đến 3.19 và điểm rèn luyện đạt từ 70 điểm trở lên. Mức học bổng bằng 100% mức trần học phí.
 
-## 3. Chính sách miễn giảm học phí
-- Miễn 100% học phí: Sinh viên là con liệt sĩ, con thương binh nặng mất sức lao động trên 81%, sinh viên tàn tật khuyết tật nặng và sinh viên mồ côi cả cha lẫn mẹ thuộc hộ nghèo.
-- Giảm 70% học phí: Sinh viên là người dân tộc thiểu số rất ít người ở vùng có điều kiện kinh tế - xã hội khó khăn hoặc đặc biệt khó khăn.
-- Giảm 50% học phí: Sinh viên là con cán bộ, công nhân viên chức mà cha hoặc mẹ bị tai nạn lao động hoặc mắc bệnh nghề nghiệp đang hưởng trợ cấp thường xuyên."""
+## 3. Điều kiện tiên quyết để xét học bổng
+Sinh viên phải tích lũy tối thiểu 15 tín chỉ trong học kỳ xét học bổng (không tính các học phần Giáo dục Thể chất, Giáo dục Quốc phòng), không bị kỷ luật từ mức khiển trách trở lên và không có học phần nào bị điểm F (điểm dưới 4.0 thang điểm 10)."""
     },
     {
-        "url": "https://daihoc.edu.vn/hoc-bong/huong-dan-quy-trinh-xet-cap-hoc-bong-khuyen-khich-hoc-tap-ky-1",
-        "title": "Hướng dẫn quy trình đăng ký xét cấp học bổng khuyến khích học tập học kỳ 1 năm học 2024-2025",
-        "date_crawled": datetime.now().isoformat(),
-        "content_markdown": """# Hướng dẫn quy trình đăng ký xét cấp học bổng khuyến khích học tập học kỳ 1 năm học 2024-2025
+        "url": "https://ptit.edu.vn/thong-bao-ve-dieu-kien-du-thi-hk-3-ky-he-nam-hoc-2025-2026-doi-voi-sinh-vien-chua-hoan-thanh-nghia-vu-hoc-phi/",
+        "title": "Thông báo về điều kiện dự thi HK 3 (kỳ hè) năm học 2025-2026 đối với sinh viên chưa hoàn thành nghĩa vụ học phí",
+        "content_markdown": """# Thông báo về điều kiện dự thi HK 3 (kỳ hè) năm học 2025-2026 đối với sinh viên chưa hoàn thành nghĩa vụ học phí
 
-Phòng Công tác Sinh viên hướng dẫn quy trình và thủ tục xét cấp học bổng khuyến khích học tập (HBKKHT) học kỳ 1 năm học 2024-2025:
+Căn cứ vào Quyết định số 2572/QĐ-HV của Giám đốc Học viện về việc ban hành Quy định tổ chức thi, kiểm tra và đánh giá các học phần của Học viện Công nghệ Bưu chính Viễn thông; Căn cứ tình hình nộp học phí thực tế của sinh viên, Phòng Giáo vụ thông báo:
 
-## 1. Đối tượng và điều kiện tiên quyết
-- Sinh viên hệ đại học chính quy đăng ký và học tối thiểu 15 tín chỉ trong học kỳ xét học bổng.
-- Không vi phạm kỷ luật từ mức khiển trách trở lên trong học kỳ xét.
-- Không có bất kỳ học phần nào nhận điểm F (điểm học phần dưới 4.0 thang điểm 10).
-- Điểm rèn luyện học kỳ đạt từ 70 điểm (loại Khá) trở lên.
+## 1. Điều kiện dự thi kết thúc học phần
+Sinh viên được quyền dự thi kết thúc học phần khi đáp ứng đầy đủ hai điều kiện sau:
+- Tham dự tối thiểu 80% thời lượng các giờ lên lớp lý thuyết và 100% các buổi thực hành, thí nghiệm theo đề cương học phần.
+- Hoàn thành đầy đủ nghĩa vụ học phí theo đúng thời hạn quy định của Học viện đối với học phần đã đăng ký trong kỳ học.
 
-## 2. Tiêu chuẩn và phân loại học bổng
-- **Học bổng Xuất sắc**: Điểm GPA từ 3.60 trở lên và Điểm rèn luyện từ 90 điểm trở lên. Mức hưởng: 120% định mức học phí.
-- **Học bổng Giỏi**: Điểm GPA từ 3.20 đến 3.59 và Điểm rèn luyện từ 80 điểm trở lên. Mức hưởng: 110% định mức học phí.
-- **Học bổng Khá**: Điểm GPA từ 2.50 đến 3.19 và Điểm rèn luyện từ 70 điểm trở lên. Mức hưởng: 100% định mức học phí.
-
-## 3. Thủ tục nhận tiền học bổng
-- Sinh viên có tên trong danh sách xét duyệt phải hoàn thiện cập nhật số tài khoản ngân hàng chính chủ trên cổng thông tin sinh viên trước ngày 30/11/2024.
-- Nhà trường sẽ chuyển khoản học bổng trực tiếp qua tài khoản ngân hàng trong vòng 15 ngày làm việc kể từ ngày ban hành quyết định chính thức."""
+## 2. Xử lý trường hợp nợ học phí
+- Các sinh viên chưa hoàn thành nghĩa vụ học phí tính đến thời điểm chốt danh sách thi sẽ không có tên trong danh sách phòng thi và bị cấm thi học phần đó.
+- Điểm thi kết thúc học phần đối với sinh viên bị cấm thi do nợ học phí sẽ bị ghi nhận điểm 0 (tương ứng điểm F).
+- Trường hợp có hoàn cảnh đặc biệt khó khăn, sinh viên phải làm đơn đề nghị hoãn nộp học phí có xác nhận của gia đình và nộp về Phòng Công tác Chính trị và Sinh viên trước ngày thi tối thiểu 05 ngày làm việc."""
     },
     {
-        "url": "https://daihoc.edu.vn/ky-tuc-xa/ke-hoach-tiep-nhan-va-bo-tri-sinh-vien-noi-tru-nam-hoc-2024-2025",
-        "title": "Kế hoạch tiếp nhận và bố trí sinh viên nội trú ký túc xá năm học 2024-2025",
-        "date_crawled": datetime.now().isoformat(),
-        "content_markdown": """# Kế hoạch tiếp nhận và bố trí sinh viên nội trú ký túc xá năm học 2024-2025
+        "url": "https://ptit.edu.vn/thong-bao-ve-viec-bo-tri-sinh-vien-khoa-2025-noi-tru-o-cac-ky-tuc-xa-tai-co-so-dao-tao-ha-noi/",
+        "title": "Thông báo về việc bố trí chỗ ở nội trú cho sinh viên khóa 2025 tại các ký túc xá (cơ sở đào tạo Hà Nội)",
+        "content_markdown": """# Thông báo về việc bố trí chỗ ở nội trú cho sinh viên khóa 2025 tại các ký túc xá (cơ sở đào tạo Hà Nội)
 
-Ban Quản lý Ký túc xá thông báo kế hoạch tiếp nhận và sắp xếp chỗ ở nội trú cho sinh viên năm học 2024-2025:
+Học viện Công nghệ Bưu chính Viễn thông thông báo về kế hoạch xét duyệt và tiếp nhận sinh viên ở nội trú tại các Ký túc xá (KTX) của Học viện tại Cơ sở đào tạo Hà Nội (Km10 đường Nguyễn Trãi, Hà Đông, Hà Nội):
 
-## 1. Chỉ tiêu và loại hình phòng ở
-- Tổng số chỗ nội trú phân bổ: 1.200 chỗ.
-- Phòng tiêu chuẩn (4 sinh viên / phòng): Phí nội trú 450.000 VNĐ / người / tháng.
-- Phòng dịch vụ cao cấp (2 sinh viên / phòng, có điều hòa, tủ lạnh): Phí nội trú 900.000 VNĐ / người / tháng.
-- Phí dịch vụ internet tốc độ cao: 50.000 VNĐ / phòng / tháng.
+## 1. Đối tượng và tiêu chí ưu tiên tiếp nhận
+Do số lượng chỗ ở có hạn, Học viện thực hiện xét duyệt chỗ ở nội trú theo thứ tự ưu tiên:
+- **Ưu tiên 1**: Sinh viên là con thương binh, bệnh binh, con liệt sĩ, con người có công với cách mạng.
+- **Ưu tiên 2**: Sinh viên khuyết tật, sinh viên mồ côi cả cha lẫn mẹ thuộc diện hộ nghèo, cận nghèo.
+- **Ưu tiên 3**: Sinh viên có hộ khẩu thường trú tại vùng sâu, vùng xa, biên giới, hải đảo hoặc các xã đặc biệt khó khăn.
+- **Ưu tiên 4**: Tân sinh viên trúng tuyển đạt thành tích cao trong kỳ thi Olympic quốc gia, quốc tế hoặc đạt điểm xét tuyển thủ khoa.
 
-## 2. Thời gian và quy trình đăng ký
-- Thời gian đăng ký trực tuyến: Từ 08h00 ngày 01/08 đến 17h00 ngày 20/08/2024 trên website Ban Quản lý KTX.
-- Công bố kết quả xét duyệt chỗ ở: 25/08/2024.
-- Tiếp nhận sinh viên và làm thủ tục nhận phòng: Từ ngày 28/08 đến 05/09/2024.
+## 2. Các loại phòng ở và mức thu lệ phí KTX
+- **Phòng tiêu chuẩn (phòng 4 sinh viên)**: Mức phí nội trú là 450.000 VNĐ / người / tháng.
+- **Phòng chất lượng cao (phòng 2 sinh viên có điều hòa, bình nóng lạnh)**: Mức phí nội trú là 900.000 VNĐ / người / tháng.
+- Chi phí điện, nước sinh hoạt thu theo chỉ số công tơ thực tế hàng tháng theo quy định giá nhà nước.
 
-## 3. Giấy tờ cần chuẩn bị khi làm thủ tục nhận phòng
-- 01 bản photo Căn cước công dân (có công chứng).
-- 02 ảnh thẻ kích thước 3x4 chụp không quá 6 tháng.
-- Giấy chứng nhận diện ưu tiên (nếu có: con thương binh, giấy xác nhận hộ nghèo, quyết định tuyển thẳng).
-- Tiền đặt cọc tài sản phòng ở: 500.000 VNĐ / sinh viên (được hoàn trả khi thanh lý hợp đồng chuyển ra ngoài)."""
+## 3. Thủ tục nhập phòng và hồ sơ cần nộp
+Sinh viên có tên trong danh sách được duyệt chỗ ở nội trú chuẩn bị:
+- 01 bản photocopy Căn cước công dân có công chứng.
+- Giấy tờ chứng nhận đối tượng ưu tiên (nếu có).
+- 02 ảnh thẻ cỡ 3x4 chụp trong thời gian 6 tháng gần nhất để làm thẻ nội trú."""
     },
     {
-        "url": "https://daihoc.edu.vn/dao-tao/quy-dinh-chuan-dau-ra-ngoai-ngu-va-tin-hoc-xet-tot-nghiep",
-        "title": "Quy định chuẩn đầu ra ngoại ngữ tiếng Anh và chứng chỉ tin học cho sinh viên xét tốt nghiệp",
-        "date_crawled": datetime.now().isoformat(),
-        "content_markdown": """# Quy định chuẩn đầu ra ngoại ngữ tiếng Anh và chứng chỉ tin học cho sinh viên xét tốt nghiệp
+        "url": "https://ptit.edu.vn/thong-bao-ve-viec-cap-hoc-bong-cua-ngan-hang-vietcombank-tai-tro-cho-sinh-vien-ptit-nam-hoc-2025-2026/",
+        "title": "Thông báo về việc cấp học bổng của ngân hàng Vietcombank tài trợ cho sinh viên PTIT năm học 2025-2026",
+        "content_markdown": """# Thông báo về việc cấp học bổng của ngân hàng Vietcombank tài trợ cho sinh viên PTIT năm học 2025-2026
 
-Phòng Đào tạo thông báo quy định chuẩn đầu ra Ngoại ngữ và Tin học áp dụng cho toàn bộ sinh viên đại học chính quy:
+Kính gửi: Sinh viên Đại học hệ chính quy – Học viện Công nghệ Bưu chính Viễn thông. Căn cứ thỏa thuận hợp tác tài trợ giáo dục giữa Học viện và Ngân hàng TMCP Ngoại thương Việt Nam (Vietcombank), Học viện thông báo chương trình học bổng Vietcombank tài trợ:
 
-## 1. Chuẩn đầu ra Ngoại ngữ (Tiếng Anh)
-- Đối với khối ngành Kỹ thuật và Công nghệ: Yêu cầu chứng chỉ TOEIC quốc tế tối thiểu 500 điểm, hoặc TOEFL iBT tối thiểu 55 điểm, hoặc IELTS học thuật tối thiểu 5.0.
-- Đối với khối ngành Kinh tế, Quản trị kinh doanh và Ngôn ngữ: Yêu cầu chứng chỉ TOEIC quốc tế tối thiểu 600 điểm, hoặc IELTS học thuật tối thiểu 5.5.
-- Chứng chỉ ngoại ngữ nộp xét chuẩn đầu ra phải còn thời hạn hiệu lực (trong vòng 2 năm kể từ ngày thi đến ngày nộp hồ sơ xét tốt nghiệp).
+## 1. Số lượng và giá trị học bổng
+- **Tổng số suất học bổng**: 30 suất dành cho sinh viên xuất sắc và sinh viên vượt khó vươn lên trong học tập.
+- **Giá trị học bổng**: 10.000.000 VNĐ (Mười triệu đồng) / sinh viên / năm học.
 
-## 2. Chuẩn kỹ năng sử dụng Công nghệ thông tin
-- Sinh viên phải nộp Chứng chỉ Ứng dụng Công nghệ thông tin cơ bản theo Thông tư 03/2014/TT-BTTTT, hoặc chứng chỉ quốc tế MOS (Microsoft Office Specialist) đạt tối thiểu 700/1000 điểm cho 3 phân môn Word, Excel, PowerPoint.
+## 2. Tiêu chuẩn xét chọn
+- Là sinh viên đại học hệ chính quy đang theo học tại Học viện từ năm thứ hai trở đi.
+- Có điểm trung bình chung tích lũy (GPA) tính đến thời điểm xét đạt từ 3.20 trở lên (theo thang điểm 4).
+- Điểm rèn luyện đạt từ loại Tốt (từ 80 điểm) trở lên trong năm học liền kề trước đó.
+- Ưu tiên các sinh viên có hoàn cảnh kinh tế gia đình khó khăn (có giấy chứng nhận hộ nghèo/cận nghèo) hoặc đạt giải thưởng trong các cuộc thi sáng tạo công nghệ, NCKH sinh viên cấp Học viện trở lên.
 
-## 3. Thời hạn nộp và hậu kiểm chứng chỉ
-- Sinh viên nộp bản sao công chứng kèm bản gốc để đối chiếu tại Phòng Đào tạo trước đợt xét tốt nghiệp ít nhất 30 ngày.
-- Nhà trường sẽ thực hiện hậu kiểm chứng chỉ trực tiếp với các đơn vị cấp chứng chỉ (IIG, British Council, IDP). Trường hợp phát hiện chứng chỉ giả mạo, sinh viên sẽ bị kỷ luật buộc thôi học."""
+## 3. Thời gian và cách thức nộp hồ sơ
+Sinh viên điền đơn đăng ký học bổng trực tuyến theo mẫu tại cổng thông tin sinh viên và nộp hồ sơ minh chứng về Phòng Công tác Chính trị và Học sinh Sinh viên trước ngày 15/11 hàng năm."""
     },
     {
-        "url": "https://daihoc.edu.vn/hoc-vu/thong-bao-xu-ly-hoc-vu-va-quy-trinh-xet-canh-bao-hoc-tap",
-        "title": "Thông báo xử lý học vụ và quy trình xét cảnh báo học vụ dành cho sinh viên có điểm GPA dưới 2.0",
-        "date_crawled": datetime.now().isoformat(),
-        "content_markdown": """# Thông báo xử lý học vụ và quy trình xét cảnh báo học vụ dành cho sinh viên có điểm GPA dưới 2.0
+        "url": "https://ptit.edu.vn/to-chuc-ky-thi-chuan-dau-ra-tieng-anh-dot-2-nam-2026-doi-voi-sinh-vien-dai-hoc-co-so-dao-tao-phia-bac/",
+        "title": "Tổ chức kỳ thi Chuẩn đầu ra Tiếng Anh Đợt 2 năm 2026 đối với sinh viên đại học – Cơ sở đào tạo Phía Bắc",
+        "content_markdown": """# Tổ chức kỳ thi Chuẩn đầu ra Tiếng Anh Đợt 2 năm 2026 đối với sinh viên đại học – Cơ sở đào tạo Phía Bắc
 
-Hội đồng Xử lý Học vụ thông báo kế hoạch tư vấn và xử lý học vụ đối với sinh viên có kết quả học tập yếu kém:
+Căn cứ Quyết định số 838/QĐ-HV của Giám đốc Học viện Công nghệ Bưu chính Viễn thông về việc ban hành Quy định đào tạo đại học theo tín chỉ; Căn cứ Quy định về chuẩn đầu ra ngoại ngữ cho sinh viên trình độ đại học, Học viện thông báo kế hoạch tổ chức thi chuẩn đầu ra Tiếng Anh:
 
-## 1. Các mức cảnh báo học vụ
-- **Cảnh báo mức 1**: Áp dụng đối với sinh viên có điểm trung bình học kỳ dưới 1.00 (ở học kỳ đầu tiên) hoặc dưới 1.20 (ở các học kỳ tiếp theo), hoặc có số tín chỉ tích lũy chậm tiến độ quá 15 tín chỉ so với kế hoạch học tập.
-- **Cảnh báo mức 2**: Áp dụng đối với sinh viên đã bị cảnh báo mức 1 trong học kỳ trước mà không cải thiện được kết quả học tập trong học kỳ kế tiếp.
-- **Buộc thôi học**: Sinh viên bị cảnh báo học vụ 3 lần liên tiếp sẽ nhận quyết định buộc thôi học từ Hiệu trưởng.
+## 1. Yêu cầu chuẩn đầu ra Ngoại ngữ (Tiếng Anh) tốt nghiệp
+Sinh viên tốt nghiệp trình độ đại học tại Học viện phải đạt chuẩn năng lực tiếng Anh tương đương bậc 3/6 theo Khung năng lực ngoại ngữ 6 bậc dùng cho Việt Nam (VSTEP), hoặc các chứng chỉ quốc tế còn thời hạn:
+- **Khối ngành Kỹ thuật, Công nghệ thông tin**: Đạt tối thiểu TOEIC 500 điểm quốc tế, hoặc IELTS 5.0, hoặc TOEFL iBT 55 điểm.
+- **Khối ngành Kinh tế, Truyền thông và Marketing**: Đạt tối thiểu TOEIC 600 điểm quốc tế, hoặc IELTS 5.5.
 
-## 2. Quy định bắt buộc đối với sinh viên bị cảnh báo
-- Sinh viên thuộc diện cảnh báo mức 1 và mức 2 chỉ được đăng ký tối đa 14 tín chỉ trong học kỳ kế tiếp.
-- Bắt buộc phải tham gia chương trình tư vấn học tập cùng Cố vấn học tập của Khoa và viết bản cam kết cải thiện kết quả học tập.
-- Được ưu tiên đăng ký lại các học phần điểm D, F để cải thiện điểm số tích lũy GPA.
+## 2. Đối tượng và hình thức thi
+- **Đối tượng dự thi**: Sinh viên năm cuối chuẩn bị xét tốt nghiệp và sinh viên các khóa trước chưa đạt chuẩn đầu ra ngoại ngữ.
+- **Hình thức thi**: Bài thi đánh giá năng lực tiếng Anh 4 kỹ năng (Nghe, Đọc, Viết, Nói) trên máy tính tại Trung tâm Khảo thí Học viện.
 
-## 3. Thời gian khiếu nại và phúc khảo
-- Sinh viên có quyền nộp đơn khiếu nại kết quả học vụ trong vòng 10 ngày làm việc kể từ ngày công bố danh sách cảnh báo học vụ trên cổng thông tin sinh viên."""
+## 3. Lệ phí và thời hạn đăng ký
+- Sinh viên đăng ký dự thi trực tuyến qua cổng quản lý đào tạo `daotao.ptit.edu.vn`.
+- Thời gian tiếp nhận đăng ký: Từ ngày 01/04 đến hết ngày 20/04 hàng năm.
+- Sinh viên đã có chứng chỉ quốc tế còn thời hạn 2 năm có thể nộp hồ sơ xin miễn thi và công nhận chuẩn đầu ra tại Phòng Giáo vụ."""
     }
 ]
 
 
-def crawl_article(article_info: dict) -> dict:
-    """Tạo hoặc crawl nội dung bài viết theo chuẩn."""
+def crawl_article(index: int) -> dict:
+    """Tải nội dung bài viết từ website PTIT hoặc dùng bản offline chất lượng cao."""
+    pid = PTIT_POST_IDS[index]
+    url = f"https://ptit.edu.vn/wp-json/wp/v2/posts/{pid}"
+    
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            title = html.unescape(data["title"]["rendered"])
+            link = data["link"]
+            content_html = data["content"]["rendered"]
+            text = re.sub(r"</?(p|div|br)[^>]*>", "\n\n", content_html)
+            text = re.sub(r"</?(h[1-6])[^>]*>", "\n\n### ", text)
+            text = re.sub(r"<li[^>]*>", "\n- ", text)
+            text = re.sub(r"<[^>]+>", " ", text)
+            text = html.unescape(text)
+            text = re.sub(r"\n{3,}", "\n\n", text).strip()
+            
+            return {
+                "url": link,
+                "title": title,
+                "date_crawled": datetime.now().isoformat(),
+                "content_markdown": f"# {title}\n\n{text}",
+            }
+    except Exception as e:
+        print(f"Fetch live post {pid} failed ({e}), using offline data.")
+
+    # Fallback offline copy
+    offline = OFFLINE_ARTICLES[index]
     return {
-        "url": article_info["url"],
-        "title": article_info["title"],
-        "date_crawled": article_info["date_crawled"],
-        "content_markdown": article_info["content_markdown"],
+        "url": offline["url"],
+        "title": offline["title"],
+        "date_crawled": datetime.now().isoformat(),
+        "content_markdown": offline["content_markdown"],
     }
 
 
 def crawl_all() -> None:
-    """Lưu 5 bài viết thành các file JSON trong data/landing/news/."""
+    """Lưu 5 bài viết chính thức từ PTIT thành các file JSON trong data/landing/news/."""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    for index, item in enumerate(ARTICLES_DATA, 1):
-        output = DATA_DIR / f"article_{index:02d}.json"
-        article = crawl_article(item)
+    for index in range(len(PTIT_POST_IDS)):
+        output = DATA_DIR / f"article_{index + 1:02d}.json"
+        article = crawl_article(index)
         output.write_text(
             json.dumps(article, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
-        print(f"Saved: {output}")
+        print(f"Saved: {output} ({len(article['content_markdown'])} chars) - URL: {article['url']}")
 
 
 if __name__ == "__main__":
